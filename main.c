@@ -6,7 +6,7 @@
 /*   By: crepou <crepou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 12:45:57 by crepou            #+#    #+#             */
-/*   Updated: 2023/05/11 19:06:08 by crepou           ###   ########.fr       */
+/*   Updated: 2023/05/13 18:51:55 by crepou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,19 @@ int	ft_get_arguments(char *argv[], int argc, char ***args)
 	}
 	(*args) = NULL;
 	return (argc - 1);
+}
+
+void	free_args(char **args)
+{
+	int	i;
+
+	i = 0;
+	while (args[i])
+	{
+		free(args[i]);
+		i++;
+	}
+	free(args);
 }
 
 int	ft_initialize(int **a, t_stack_info **stack_info_a, char *argv[], int argc)
@@ -55,8 +68,11 @@ int	ft_initialize(int **a, t_stack_info **stack_info_a, char *argv[], int argc)
 	(*stack_info_a)->len = number_of_args;
 	(*stack_info_a)->size = number_of_args;
 	(*stack_info_a)->top = number_of_args - 1;
+	if (argc == 2)
+		free_args(args);
 	return (number_of_args);
 }
+
 
 int	main(int argc, char *argv[])
 {
@@ -72,12 +88,13 @@ int	main(int argc, char *argv[])
 		num_of_args = ft_initialize(&stack_a, &stack_a_info, argv, argc);
 		if (num_of_args < 0 || has_duplicates(stack_a))
 		{
-			ft_printf("Error\n");
+			write(2, "Error\n", 6);
 			return (-1);
 		}
 		push_swap(stack_a, stack_a_info);
-		//free(stack_a_info);
-		//free(stack_a);
+		free(stack_a_info);
+		free(stack_a);
+		system("leaks push_swap");
 	}
 	return (0);
 }

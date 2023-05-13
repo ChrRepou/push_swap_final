@@ -6,7 +6,7 @@
 /*   By: crepou <crepou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:48:47 by crepou            #+#    #+#             */
-/*   Updated: 2023/05/11 19:06:23 by crepou           ###   ########.fr       */
+/*   Updated: 2023/05/13 13:49:09 by crepou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	push_swap(int *a, t_stack_info *stack_info_a)
 		free(c);
 		big_sort(&a, stack_info_a, &b, stack_info_b);
 	}
-	//free(b);
-	//free(stack_info_b);
+	free(b);
+	free(stack_info_b);
 	return (0);
 }
